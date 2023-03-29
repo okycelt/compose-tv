@@ -74,7 +74,7 @@ fun Modifier.drawBorderOnFocus(borderColor: Color = Color.White): Modifier {
         .border(5.dp, borderColor.copy(alpha = if (isFocused) 1f else 0.2f))
         .onFocusChanged { isFocused = it.isFocused }
 }
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 internal fun FeaturedCarousel(modifier: Modifier = Modifier) {
     val backgrounds = listOf(
@@ -104,7 +104,7 @@ internal fun FeaturedCarousel(modifier: Modifier = Modifier) {
             )
         }
     ) { itemIndex ->
-        CarouselItem(
+        CarouselSlide(
             background = {
                 Box(
                     modifier = Modifier
