@@ -28,9 +28,9 @@ class BaselineProfilesGenerator {
         // enter "Lazy Rows and Columns"
         device.pressDPadDown()
 
-        device.pressDPadDown()
-        device.pressDPadRight()
-        device.pressDPadUp()
-        device.pressDPadLeft()
+        repeat(10) { device.pressDPadDown() }
+        repeat(10) { device.pressDPadRight() }
+        repeat(10) { device.pressDPadLeft() }
+        repeat(10) { device.pressDPadUp() }
     }
 }
