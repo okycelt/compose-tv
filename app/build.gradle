@@ -33,6 +33,7 @@ android {
             signingConfig signingConfigs.debug
             matchingFallbacks = ['release']
             debuggable false
+            proguardFiles 'baseline-profiles -rules.pro'
         }
     }
 
@@ -65,4 +66,6 @@ dependencies {
     implementation 'androidx.compose.material3:material3:1.0.1'
     implementation 'androidx.tv:tv-foundation:1.0.0-alpha04'
     implementation 'androidx.tv:tv-material:1.0.0-alpha04'
+
+    implementation 'androidx.profileinstaller:profileinstaller:1.2.2'
 }

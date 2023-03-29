@@ -1,5 +1,6 @@
 package cz.okycelt.composetv.benchmark
 
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -16,11 +17,17 @@ class NavigationBenchmark {
     val benchmarkRule = MacrobenchmarkRule()
 
     @Test
-    fun navigateLazyRowAndColumns() = benchmarkRule.measureRepeated(
+    fun navigateLazyRowAndColumnsCompilationNone() = navigateLazyRowAndColumns(CompilationMode.None())
+
+    @Test
+    fun navigateLazyRowAndColumnsCompilationPartial() = navigateLazyRowAndColumns(CompilationMode.Partial())
+
+    private fun navigateLazyRowAndColumns(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
         packageName = "cz.okycelt.composetv",
         metrics = listOf(FrameTimingMetric()),
         iterations = 5,
         startupMode = StartupMode.COLD,
+        compilationMode = compilationMode,
         setupBlock = {
             pressHome()
             startActivityAndWait()
@@ -31,16 +38,22 @@ class NavigationBenchmark {
     ) {
         repeat(10) { device.pressDPadDown() }
         repeat(10) { device.pressDPadRight() }
-        repeat(10) { device.pressDPadUp() }
         repeat(10) { device.pressDPadLeft() }
+        repeat(10) { device.pressDPadUp() }
     }
 
     @Test
-    fun navigateImmersiveList() = benchmarkRule.measureRepeated(
+    fun navigateImmersiveListCompilationNone() = navigateImmersiveList(CompilationMode.None())
+
+    @Test
+    fun navigateImmersiveListCompilationPartial() = navigateImmersiveList(CompilationMode.Partial())
+
+    private fun navigateImmersiveList(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
         packageName = "cz.okycelt.composetv",
         metrics = listOf(FrameTimingMetric()),
         iterations = 5,
         startupMode = StartupMode.COLD,
+        compilationMode = compilationMode,
         setupBlock = {
             pressHome()
             startActivityAndWait()
