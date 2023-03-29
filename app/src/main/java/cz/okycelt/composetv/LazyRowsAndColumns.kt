@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.tv.foundation.ExperimentalTvFoundationApi
 import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.foundation.lazy.list.TvLazyRow
 import androidx.tv.foundation.lazy.list.itemsIndexed
@@ -26,6 +27,7 @@ fun LazyRowsAndColumns() {
         items(rowsCount) { SampleLazyRow() }
     }
 }
+@OptIn(ExperimentalTvFoundationApi::class)
 @Composable
 fun SampleLazyRow() {
     val colors = listOf(Color.Red, Color.Magenta, Color.Green, Color.Yellow, Color.Blue, Color.Cyan)
@@ -34,21 +36,29 @@ fun SampleLazyRow() {
     Column {
         Text(text = "Row Title")
 
-        TvLazyRow(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            itemsIndexed(items = backgroundColors) { index, backgroundColor ->
-                AsyncImage(
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    model = "https://picsum.photos/480/640?random=$index",
-                    modifier = Modifier
-                        .background(backgroundColor.copy(alpha = 0.3f))
-                        .width(120.dp)
-                        .height(160.dp)
-                        .drawBorderOnFocus()
-                        .clickable { }
-                )
+        FocusGroup {
+            TvLazyRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                itemsIndexed(items = backgroundColors) { index, backgroundColor ->
+                    val itemModifier = if (index == 0) {
+                        Modifier.initiallyFocused()
+                    } else {
+                        Modifier.restorableFocus()
+                    }
+
+                    AsyncImage(
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        model = "https://picsum.photos/480/640?random=$index",
+                        modifier = itemModifier
+                            .background(backgroundColor.copy(alpha = 0.3f))
+                            .width(120.dp)
+                            .height(160.dp)
+                            .drawBorderOnFocus()
+                            .clickable { }
+                    )
+                }
             }
         }
     }
