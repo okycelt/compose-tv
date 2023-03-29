@@ -31,9 +31,16 @@ class NavigationBenchmark {
         setupBlock = {
             pressHome()
             startActivityAndWait()
-            device.wait(Until.hasObject(By.text("Lazy Rows and Columns")), 30_000)
+
+            val selector = By.text("Lazy Rows and Columns")
+            device.wait(Until.hasObject(selector), 5_000)
+
+            val barItem = device.findObject(selector)
+            device.pressDPadDown() // focus first item
+            barItem.wait(Until.focused(true), 5_000)
 
             device.pressDPadDown()
+            barItem.wait(Until.focused(false), 5_000)
         }
     ) {
         repeat(10) { device.pressDPadDown() }
@@ -57,13 +64,18 @@ class NavigationBenchmark {
         setupBlock = {
             pressHome()
             startActivityAndWait()
-            device.wait(Until.hasObject(By.text("Lazy Rows and Columns")), 30_000)
 
+            val selector = By.text("Immersive List")
+            device.wait(Until.hasObject(selector), 5_000)
+
+            val barItem = device.findObject(selector)
+            device.pressDPadRight() // focus first item
             device.pressDPadRight()
             device.pressDPadRight()
-            device.pressDPadRight()
-            device.wait(Until.hasObject(By.res("ImmersiveListContent")), 30_000)
+            barItem.wait(Until.focused(true), 5_000)
+
             device.pressDPadDown()
+            barItem.wait(Until.focused(false), 5_000)
         }
     ) {
         repeat(3) { device.pressDPadDown() }

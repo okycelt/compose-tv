@@ -31,6 +31,6 @@ class StartupBenchmark {
     ) {
         pressHome()
         startActivityAndWait()
-        device.wait(Until.hasObject(By.text("Lazy Rows and Columns")), 30_000)
+        device.wait(Until.hasObject(By.text("Lazy Rows and Columns")), 5_000)
     }
 }

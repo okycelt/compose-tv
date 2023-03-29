@@ -14,27 +14,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.ImmersiveList
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ImmersiveListContent() {
-    TvLazyColumn(
-        modifier = Modifier
-            .testTag("ImmersiveListContent")
-            .semantics { testTagsAsResourceId = true },
-        verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
+    TvLazyColumn(verticalArrangement = Arrangement.spacedBy(20.dp)) {
         items(3) { SampleLazyRow() }
         item { SampleImmersiveList() }
         items(3) { SampleLazyRow() }
